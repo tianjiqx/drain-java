@@ -43,7 +43,7 @@ product, anything could change.
 [source, shell]
 ----
 $ ./gradlew build
-$ java -jar tailer/build/libs/tailer-0.1.0-SNAPSHOT-all.jar -h
+$ java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -h
 
 tail - drain
 Usage: tail [-dfhV] [--verbose] [-n=NUM]
@@ -64,12 +64,42 @@ Usage: tail [-dfhV] [--verbose] [-n=NUM]
                       COLUMN
   -V, --version     Print version information and exit.
       --verbose     Verbose output, mostly for DRAIN or errors
-$ java -jar tailer/build/libs/tailer-0.1.0-SNAPSHOT-all.jar --version
+$ java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar --version
 Versioned Command 1.0
 Picocli 4.6.3
 JVM: 19 (Amazon.com Inc. OpenJDK 64-Bit Server VM 19+36-FR)
 OS: Mac OS X 12.6 x86_64
 ----
+
+
+655147 row
+time java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -d -n 10000000 --parse-after-str="]: " build/SSH.log
+1.83s user 0.19s system 128% cpu 1.581 total
+
+java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -d -n 10000000 build/SSH.log
+2.17s user 0.22s system 117% cpu 2.040 total
+
+// depth 4
+java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -d -n 10000000 /Users/tianjiqx/qx/datasets/log/Android.log
+65.19s user 1.46s system 95% cpu 1:09.46 total
+
+time java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -d -n 10000000 /Users/tianjiqx/qx/datasets/log/logpai2k/HDFS_2k.log
+0.43s user 0.11s system 95% cpu 0.565 total
+
+
+time java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -d -n 10000000 /Users/tianjiqx/qx/datasets/log/logpai2k/HDFS_2k.log
+
+time java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -d -n 10000000 --depth=6 /Users/tianjiqx/qx/datasets/log/logpai2k/HDFS_2k.log
+
+// Android  online 155 5005 rows 183MB
+
+// depth 5
+time java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -d -n 10000000 --depth=5  /Users/tianjiqx/qx/datasets/log/Android.log
+84.54s user 3.94s system 73% cpu 2:00.80 total
+
+// depth 6
+time java -jar tailer/build/libs/tailer-0.0.1-SNAPSHOT-all.jar -d -n 10000000 --depth=6  /Users/tianjiqx/qx/datasets/log/Android.log
+80.67s user 2.65s system 89% cpu 1:32.71 total
 
 By default, the tool act similarly to `tail`, and it will output the file to the stdout.
 The tool can _follow_ a file if the `--follow` option is passed.
@@ -85,7 +115,7 @@ $ java -jar build/libs/drain-java-1.0-SNAPSHOT-all.jar \
   -d \ <1>
   -n 0 \ <2>
   --parse-after-str "]: " <3>
-  build/resources/test/SSH.log <4>
+  build/SSH.log <4>
 ----
 <1> Identify patterns in the log
 <2> Starts from the beginning of the file (otherwise it starts from the last 10 lines)
@@ -135,7 +165,7 @@ var drain = Drain.drainBuilder()
                  .additionalDelimiters("_")
                  .depth(4)
                  .build()
-Files.lines(Paths.get("build/resources/test/SSH.log"),
+Files.lines(Paths.get("build/SSH.log"),
             StandardCharsets.UTF_8)
      .forEach(drain::parseLogMessage);
 

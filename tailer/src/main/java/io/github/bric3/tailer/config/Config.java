@@ -24,12 +24,12 @@ public class Config {
     public final DrainConfig drain;
 
     public Config(boolean verbose) {
-        this(verbose, "", 0);
+        this(verbose, "", 0, 4, 0.4);
     }
 
-    public Config(boolean verbose, String parseAfterStr, int parseAfterCol) {
+    public Config(boolean verbose, String parseAfterStr, int parseAfterCol, int depth, double similarityThreshold) {
         this.verbose = verbose;
-        this.drain = new DrainConfig(parseAfterStr, parseAfterCol);
+        this.drain = new DrainConfig(parseAfterStr, parseAfterCol, depth, similarityThreshold);
         this.out = System.out;
         this.err = System.err;
         this.charset = StandardCharsets.UTF_8;
@@ -38,10 +38,16 @@ public class Config {
     public static class DrainConfig {
         public final String parseAfterStr;
         public final int parseAfterCol;
+        public final int depth;
+        public final double similarityThreshold;
 
-        DrainConfig(String parseAfterStr, int parseAfterCol) {
+
+        DrainConfig(String parseAfterStr, int parseAfterCol, int depth, double similarityThreshold) {
             this.parseAfterStr = parseAfterStr;
             this.parseAfterCol = parseAfterCol;
+            this.depth = depth;
+            this.similarityThreshold = similarityThreshold;
         }
+
     }
 }

@@ -182,16 +182,16 @@ tasks {
         }
     }
 
-    register<de.undercouch.gradle.tasks.download.Download>("downloadFile") {
-        src("https://zenodo.org/record/3227177/files/SSH.tar.gz")
-        dest(File(buildDir, "SSH.tar.gz"))
-        onlyIfModified(true)
-    }
-
+//    register<de.undercouch.gradle.tasks.download.Download>("downloadFile") {
+//        src("https://zenodo.org/record/3227177/files/SSH.tar.gz")
+//        dest(File(buildDir, "SSH.tar.gz"))
+//        onlyIfModified(true)
+//    }
+//
     register<Copy>("unpackFile") {
-        dependsOn("downloadFile")
-        from(tarTree(File(buildDir, "SSH.tar.gz")))
-        into(buildDir)
+//        dependsOn("downloadFile")
+//        from(tarTree(File(buildDir, "SSH.tar.gz")))
+//        into(buildDir)
     }
 }
 

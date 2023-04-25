@@ -34,8 +34,9 @@ public class DrainFile {
         assert fromLine != null;
 
         var drain = Drain.drainBuilder()
-                         .additionalDelimiters("_")
-                         .depth(4)
+//                         .additionalDelimiters("_")
+                         .depth(config.drain.depth)
+                         .similarityThreshold(config.drain.similarityThreshold)
                          .build();
 
         var lineCounter = new AtomicInteger();

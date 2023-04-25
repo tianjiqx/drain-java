@@ -62,6 +62,16 @@ public class TailerMain implements Runnable {
             paramLabel = "COLUMN")
     int parseAfterCol = 0;
 
+    @Option(names = {"--depth"},
+            paramLabel = "[+]NUM",
+            defaultValue = "4")
+    int depth = 4;
+
+    @Option(names = {"--st"},
+            description = "similarityThreshold",
+            paramLabel = "COLUMN")
+    double similarityThreshold = 0.4;
+
     @Option(names = {"-f", "--follow"},
             description = "output appended data as the file grows")
     boolean follow;
@@ -90,7 +100,7 @@ public class TailerMain implements Runnable {
             System.exit(ERR_NO_FILEPATH);
         }
 
-        var config = new Config(verbose, parseAfterStr, parseAfterCol);
+        var config = new Config(verbose, parseAfterStr, parseAfterCol, depth, similarityThreshold);
 
         if (drain) {
             new DrainFile(config).drain(file, fromLine, follow);

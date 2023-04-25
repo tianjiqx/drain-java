@@ -32,9 +32,11 @@ application {
     mainClass.set("io.github.bric3.tailer.TailerMain")
 }
 
-val JAVA_VERSION = 19
+val JAVA_VERSION = 17
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(JAVA_VERSION))
     }
